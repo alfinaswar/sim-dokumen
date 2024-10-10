@@ -12,7 +12,7 @@
                     @csrf
                     <div class="mb-3">
                         <label class="col-form-label pt-0" for="namaKategori">Nama Kategori</label>
-                        <input class="form-control" id="namaKategori" name="namaKategori" type="text" placeholder="Enter Nama Kategori">
+                        <input class="form-control" id="namaKategori" name="NamaKategori" type="text" placeholder="Enter Nama Kategori">
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-primary" type="submit">Save</button>
