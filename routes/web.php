@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MasterKategoriController;
+use App\Http\Controllers\SituasiMaritimController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,16 +32,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::PUT('update/{id}', [MasterKategoriController::class, 'update'])->name('kategori.update');
         Route::DELETE('destroy/{id}', [MasterKategoriController::class, 'destroy'])->name('kategori.destroy');
     });
-    Route::prefix('order')->group(function () {
-        Route::get('detail/{id}', [OrderController::class, 'index'])->name('order.detail');
-        Route::post('bayar', [OrderController::class, 'store'])->name('order.store');
-        Route::post('cart', [OrderController::class, 'cart'])->name('order.cart');
-        Route::get('history', [OrderController::class, 'history'])->name('order.history');
-        Route::get('cart-view', [OrderController::class, 'cartview'])->name('order.cartview');
-        Route::POST('gantistatus', [OrderController::class, 'gantistatus'])->name('order.gantistatus');
-        Route::get('list-order', [OrderController::class, 'show'])->name('order.show');
-        Route::get('konfirmasi/{id}', [OrderController::class, 'konfirmasi'])->name('order.konfirmasi');
-        Route::delete('destroytrx/', [OrderController::class, 'destroytrx'])->name('order.destroytrx');
-    });
+    Route::resource('situasi-maritim', SituasiMaritimController::class);
 });
 

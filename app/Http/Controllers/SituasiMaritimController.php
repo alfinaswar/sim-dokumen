@@ -12,7 +12,7 @@ class SituasiMaritimController extends Controller
      */
     public function index()
     {
-        //
+        return view('situasi-maritim.index');
     }
 
     /**
