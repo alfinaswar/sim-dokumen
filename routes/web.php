@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\MasterKategoriController;
+use App\Http\Controllers\PantauanKapalController;
+use App\Http\Controllers\PerkiraanCuacaController;
 use App\Http\Controllers\SituasiMaritimController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,5 +35,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::DELETE('destroy/{id}', [MasterKategoriController::class, 'destroy'])->name('kategori.destroy');
     });
     Route::resource('situasi-maritim', SituasiMaritimController::class);
+    Route::resource('pantauan-kapal', PantauanKapalController::class);
+    Route::resource('perkiraan-cuaca', PerkiraanCuacaController::class);
 });
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MasterKategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $kategori = MasterKategori::with([
+            'getSituasiMaritim' => function ($query) {
+                $query
+                    ->select('*', DB::raw('count(*) as KategoriKejadian'))
+                    ->groupBy('Kategori');
+            }
+        ])->orderBy('id', 'DESC')->get();
+        // dd($kategori);
+        return view('home',compact('kategori'));
     }
 }

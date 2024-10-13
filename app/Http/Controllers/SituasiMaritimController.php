@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MasterKategori;
 use App\Models\SituasiMaritim;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Return_;
+use DB;
 
 class SituasiMaritimController extends Controller
 {
@@ -12,7 +15,9 @@ class SituasiMaritimController extends Controller
      */
     public function index()
     {
-        return view('situasi-maritim.index');
+        $kategori = MasterKategori::with('getSituasiMaritim')->orderBy('id', 'DESC')->latest()->get();
+        // return $kategori;
+        return view('situasi-maritim.index', compact('kategori'));
     }
 
     /**
@@ -28,7 +33,8 @@ class SituasiMaritimController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        SituasiMaritim::create($request->all());
+        return redirect()->back()->with('success', 'Data Berhasil Disimpan');
     }
 
     /**
@@ -42,24 +48,34 @@ class SituasiMaritimController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SituasiMaritim $situasiMaritim)
+    public function edit($id)
     {
-        //
+        $kategori = MasterKategori::get();
+        $data = SituasiMaritim::find($id);
+        return view('situasi-maritim.edit',compact('data','kategori'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SituasiMaritim $situasiMaritim)
+    public function update(Request $request, $id)
     {
-        //
+        $data = SituasiMaritim::findOrFail($id);
+        $data->Kategori = $request->Kategori;
+        $data->Lokasi = $request->Lokasi;
+        $data->Waktu = $request->Waktu;
+        $data->Keterangan = $request->Keterangan;
+        $data->save();
+        return redirect()->back()->with('success', 'Data Berhasil Diupdate');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SituasiMaritim $situasiMaritim)
+    public function destroy($id)
     {
-        //
+        $kapal = SituasiMaritim::findOrFail($id);
+        $kapal->delete();
+        return response()->json(['success' => 'Data berhasil dihapus!']);
     }
 }

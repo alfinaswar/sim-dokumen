@@ -12,7 +12,8 @@ class PantauanKapalController extends Controller
      */
     public function index()
     {
-        //
+        $data = PantauanKapal::latest()->get();
+        return view('pantauan-kapal.index',compact('data'));
     }
 
     /**
@@ -20,7 +21,7 @@ class PantauanKapalController extends Controller
      */
     public function create()
     {
-        //
+        return view('pantauan-kapal.create');
     }
 
     /**
@@ -28,7 +29,25 @@ class PantauanKapalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        if ($request->hasFile('gambar')) {
+            $imageName = time() . '.' . $request->gambar->extension();
+            $request->gambar->move(public_path('images'), $imageName);
+        }else{
+             $imageName = null;
+        }
+
+        PantauanKapal::create([
+            'MMSI' => $request->mmsi,
+            'NamaKapal' => $request->nama_kapal,
+            'NegaraKapal' => $request->negara_kapal,
+            'JenisKapal' => $request->jenis_kapal,
+            'Gambar' => $imageName,
+            'Keterangan' => $request->keterangan,
+        ]);
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Data pemantauan kapal berhasil ditambahkan!');
     }
 
     /**
@@ -42,24 +61,45 @@ class PantauanKapalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PantauanKapal $pantauanKapal)
+    public function edit($id)
     {
-        //
+        $data = PantauanKapal::findOrFail($id);
+        return view('pantauan-kapal.edit',compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PantauanKapal $pantauanKapal)
+    public function update(Request $request, $id)
     {
-        //
+        $kapal = PantauanKapal::findOrFail($id);
+
+        if ($request->hasFile('gambar')) {
+            $imageName = time() . '.' . $request->gambar->extension();
+            $request->gambar->move(public_path('images'), $imageName);
+            $kapal->Gambar = $imageName;
+        }else{
+            $kapal->Gambar = null;
+        }
+
+        $kapal->MMSI = $request->mmsi;
+        $kapal->NamaKapal = $request->nama_kapal;
+        $kapal->NegaraKapal = $request->negara_kapal;
+        $kapal->JenisKapal = $request->jenis_kapal;
+        $kapal->Keterangan = $request->keterangan;
+
+        $kapal->save();
+
+        return redirect()->route('pantauan-kapal.index')->with('success', 'Data pemantauan kapal berhasil diupdate!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PantauanKapal $pantauanKapal)
+    public function destroy($id)
     {
-        //
+        $kapal = PantauanKapal::findOrFail($id);
+        $kapal->delete();
+        return response()->json(['success' => 'Data berhasil dihapus!']);
     }
 }

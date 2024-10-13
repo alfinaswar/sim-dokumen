@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MasterKategori extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
+
     protected $table = 'master_kategoris';
     protected $guarded = ['id'];
+
+    public function getSituasiMaritim()
+    {
+        return $this->hasMany(SituasiMaritim::class, 'Kategori', 'id');
+    }
 }
