@@ -13,8 +13,8 @@ class PerkiraanCuacaController extends Controller
      */
     public function index()
     {
-    $data = PerkiraanCuaca::latest()->get();
-       return view('perkiraan-cuaca.index',compact('data'));
+        $data = PerkiraanCuaca::latest()->get();
+        return view('perkiraan-cuaca.index', compact('data'));
     }
 
     /**
@@ -48,7 +48,7 @@ class PerkiraanCuacaController extends Controller
             $file = $request->file('gambar');
             $path = $file->store('images', 'public');
             $perkiraanCuaca->Gambar = $path;
-        }else{
+        } else {
             $perkiraanCuaca->Gambar = null;
         }
         $perkiraanCuaca->keterangan = $request->Keterangan;
@@ -59,9 +59,10 @@ class PerkiraanCuacaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PerkiraanCuaca $perkiraanCuaca)
+    public function show(Request $request, $id)
     {
-        //
+        $data = PerkiraanCuaca::find($id);
+        return view('perkiraan-cuaca.show', compact('data'));
     }
 
     /**

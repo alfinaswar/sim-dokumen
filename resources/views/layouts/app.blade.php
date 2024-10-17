@@ -38,12 +38,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('') }}assets/css/datatables.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('') }}assets/css/animate.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('') }}assets/css/chartist.css">
-    <link rel="stylesheet" type="text/css" hrefRoute::resource('situasi-maritim', SituasiMaritimController::class);="{{ asset('') }}assets/css/date-picker.css">
+    <link rel="stylesheet" type="text/css" hrefRoute::resource('situasi-maritim',
+        SituasiMaritimController::class);="{{ asset('') }}assets/css/date-picker.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('') }}assets/css/prism.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('') }}assets/css/vector-map.css">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <link rel="stylesheet" type="text/css" href="{{ asset('') }}assets/css/select2.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('') }}assets/css/select2.css">
 
     <!-- Plugins css Ends-->
     <!-- Bootstrap css-->
@@ -56,6 +57,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+        integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
@@ -152,7 +156,7 @@
                                         <h6>General</h6>
                                     </div>
                                 </li>
-                                <li class="dropdown"><a class="nav-link menu-title" href="{{route('home')}}"><i
+                                <li class="dropdown"><a class="nav-link menu-title" href="{{ route('home') }}"><i
                                             data-feather="home"></i><span>Beranda</span></a>
                                 </li>
                                 <li class="dropdown"><a class="nav-link menu-title"
@@ -160,10 +164,12 @@
                                             data-feather="airplay"></i><span>Situasi
                                             Maritim</span></a>
                                 </li>
-                                <li class="dropdown"><a class="nav-link menu-title" href="{{ route('perkiraan-cuaca.index') }}"><i
+                                <li class="dropdown"><a class="nav-link menu-title"
+                                        href="{{ route('perkiraan-cuaca.index') }}"><i
                                             data-feather="layout"></i><span>Perkiraan Cuaca</span></a>
                                 </li>
-                                <li class="dropdown"><a class="nav-link menu-title" href="{{ route('pantauan-kapal.index') }}"><i
+                                <li class="dropdown"><a class="nav-link menu-title"
+                                        href="{{ route('pantauan-kapal.index') }}"><i
                                             data-feather="layout"></i><span>Pantauan Kapal</span></a>
                                 </li>
                                 <li class="sidebar-main-title">
@@ -171,8 +177,8 @@
                                         <h6>Data Master</h6>
                                     </div>
                                 </li>
-                                <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
-                                            data-feather="home"></i><span>Master Akun</span></a>
+                                {{-- <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
+                                            data-feather="home"></i><span>Master Akun</span></a> --}}
                                 <li class="dropdown"><a class="nav-link menu-title"
                                         href="{{ route('kategori.index') }}"><i data-feather="home"></i><span>Master
                                             Kategori</span></a>
@@ -244,7 +250,7 @@
     <script src="{{ asset('') }}assets/js/datepicker/date-picker/datepicker.custom.js"></script>
     <script src="{{ asset('') }}assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
     <script src="{{ asset('') }}assets/js/datatable/datatables/datatable.custom.js"></script>
-        <script src="{{ asset('') }}assets/js/select2/select2.full.min.js"></script>
+    <script src="{{ asset('') }}assets/js/select2/select2.full.min.js"></script>
     <script src="{{ asset('') }}assets/js/select2/select2-custom.js"></script>
     <!-- Plugins JS Ends-->
     <!-- Theme js-->

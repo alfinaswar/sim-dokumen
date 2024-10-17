@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PantauanKapal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PantauanKapalController extends Controller
 {
@@ -13,7 +14,15 @@ class PantauanKapalController extends Controller
     public function index()
     {
         $data = PantauanKapal::latest()->get();
-        return view('pantauan-kapal.index',compact('data'));
+        $Asing = PantauanKapal::where('NegaraKapal', '!=', 'Indonesia')->get();
+        $jumlahKapalPerNegara = PantauanKapal::select('NegaraKapal', DB::raw('count(*) as jumlah'))
+            ->groupBy('NegaraKapal')
+            ->get();
+
+        $Tipekapal = PantauanKapal::select('JenisKapal', DB::raw('count(*) as JumlahTipe'))
+            ->groupBy('NegaraKapal')
+            ->get();
+        return view('pantauan-kapal.index', compact('data', 'Asing', 'jumlahKapalPerNegara', 'Tipekapal'));
     }
 
     /**
@@ -33,8 +42,8 @@ class PantauanKapalController extends Controller
         if ($request->hasFile('gambar')) {
             $imageName = time() . '.' . $request->gambar->extension();
             $request->gambar->move(public_path('images'), $imageName);
-        }else{
-             $imageName = null;
+        } else {
+            $imageName = null;
         }
 
         PantauanKapal::create([
@@ -64,7 +73,7 @@ class PantauanKapalController extends Controller
     public function edit($id)
     {
         $data = PantauanKapal::findOrFail($id);
-        return view('pantauan-kapal.edit',compact('data'));
+        return view('pantauan-kapal.edit', compact('data'));
     }
 
     /**
@@ -78,7 +87,7 @@ class PantauanKapalController extends Controller
             $imageName = time() . '.' . $request->gambar->extension();
             $request->gambar->move(public_path('images'), $imageName);
             $kapal->Gambar = $imageName;
-        }else{
+        } else {
             $kapal->Gambar = null;
         }
 
