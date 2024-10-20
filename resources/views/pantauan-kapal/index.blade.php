@@ -6,42 +6,47 @@
             <div class="card">
                 <div class="card-header">
                     <h5>Data Pantauan Kapal</h5><span></span>
-                    <a href="{{ route('pantauan-kapal.create') }}" class="btn btn-primary float-end">
-                        Tambah Data
-                    </a>
+                    @auth
+
+                        <a href="{{ route('pantauan-kapal.create') }}" class="btn btn-primary float-end">
+                            Tambah Data
+                        </a>
+                    @endauth
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="display" id="basic-1">
-                            <thead>
-                                <tr>
-                                    <th width="3%">No</th>
-                                    <th>MMSI</th>
-                                    <th>Nama Kapal</th>
-                                    <th>Negara Kapal</th>
-                                    <th>Jenis Kapal</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $no => $i)
+                    @auth
+                        <div class="table-responsive">
+                            <table class="display" id="basic-1">
+                                <thead>
                                     <tr>
-                                        <td>{{ $no + 1 }}</td>
-                                        <td>{{ $i->MMSI }}</td>
-                                        <td>{{ $i->NamaKapal }}</td>
-                                        <td>{{ $i->NegaraKapal }}</td>
-                                        <td>{{ $i->JenisKapal }}</td>
-                                        <td> <a class="btn btn-warning btn-edit"
-                                                href="{{ route('pantauan-kapal.edit', $i->id) }}">Edit</a>
-                                            <a class="btn btn-danger btn-delete" data-id="{{ $i->id }}">Hapus</a>
-                                        </td>
+                                        <th width="3%">No</th>
+                                        <th>MMSI</th>
+                                        <th>Nama Kapal</th>
+                                        <th>Negara Kapal</th>
+                                        <th>Jenis Kapal</th>
+                                        <th>Aksi</th>
                                     </tr>
-                                @endforeach
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $no => $i)
+                                        <tr>
+                                            <td>{{ $no + 1 }}</td>
+                                            <td>{{ $i->MMSI }}</td>
+                                            <td>{{ $i->NamaKapal }}</td>
+                                            <td>{{ $i->NegaraKapal }}</td>
+                                            <td>{{ $i->JenisKapal }}</td>
+                                            <td> <a class="btn btn-warning btn-edit"
+                                                    href="{{ route('pantauan-kapal.edit', $i->id) }}">Edit</a>
+                                                <a class="btn btn-danger btn-delete" data-id="{{ $i->id }}">Hapus</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
 
-                    </div> <br> <br>
+                        </div>
+                    @endauth <br> <br>
                     <center>
                         <h3>Kapal Asing</h3>
                     </center>

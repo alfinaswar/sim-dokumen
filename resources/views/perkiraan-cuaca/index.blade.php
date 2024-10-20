@@ -6,9 +6,11 @@
             <div class="card">
                 <div class="card-header">
                     <h5>Data Perkiraan Cuaca</h5><span></span>
-                    <a href="{{ route('perkiraan-cuaca.create') }}" class="btn btn-primary float-end">
-                        Tambah Data
-                    </a>
+                    @auth
+                        <a href="{{ route('perkiraan-cuaca.create') }}" class="btn btn-primary float-end">
+                            Tambah Data
+                        </a>
+                    @endauth
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -45,13 +47,16 @@
                                                 href="{{ route('perkiraan-cuaca.show', $i->id) }}">
                                                 <i class="fas fa-info-circle"></i> <!-- Icon for Detail -->
                                             </a>
-                                            <a class="btn btn-warning btn-edit"
-                                                href="{{ route('perkiraan-cuaca.edit', $i->id) }}">
-                                                <i class="fas fa-edit"></i> <!-- Icon for Edit -->
-                                            </a>
-                                            <a class="btn btn-danger btn-delete" data-id="{{ $i->id }}">
-                                                <i class="fas fa-trash-alt"></i> <!-- Icon for Hapus -->
-                                            </a>
+                                            @auth
+
+                                                <a class="btn btn-warning btn-edit"
+                                                    href="{{ route('perkiraan-cuaca.edit', $i->id) }}">
+                                                    <i class="fas fa-edit"></i> <!-- Icon for Edit -->
+                                                </a>
+                                                <a class="btn btn-danger btn-delete" data-id="{{ $i->id }}">
+                                                    <i class="fas fa-trash-alt"></i> <!-- Icon for Hapus -->
+                                                </a>
+                                            @endauth
 
                                         </td>
                                     </tr>
@@ -76,6 +81,7 @@
 
     <script>
         $(document).ready(function() {
+            dataTable();
             $('body').on('click', '.btn-delete', function() {
                 var id = $(this).data('id');
 

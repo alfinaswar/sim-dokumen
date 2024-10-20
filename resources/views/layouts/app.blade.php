@@ -106,12 +106,20 @@
                         </li>
 
                         <li class="onhover-dropdown p-0">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button class="btn btn-primary-light" type="submit"><i
-                                        data-feather="log-out"></i>Log out</button>
-                            </form>
+                            @auth
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button class="btn btn-primary-light" type="submit">
+                                        <i data-feather="log-out"></i> Log out
+                                    </button>
+                                </form>
+                            @else
+                                <a href="{{ route('login') }}" class="btn btn-primary-light">
+                                    <i data-feather="log-in"></i> Login
+                                </a>
+                            @endauth
                         </li>
+
                     </ul>
                 </div>
                 <div class="d-lg-none mobile-toggle pull-right w-auto"><i data-feather="more-horizontal"></i></div>
@@ -172,17 +180,18 @@
                                         href="{{ route('pantauan-kapal.index') }}"><i
                                             data-feather="layout"></i><span>Pantauan Kapal</span></a>
                                 </li>
-                                <li class="sidebar-main-title">
-                                    <div>
-                                        <h6>Data Master</h6>
-                                    </div>
-                                </li>
-                                {{-- <li class="dropdown"><a class="nav-link menu-title" href="javascript:void(0)"><i
-                                            data-feather="home"></i><span>Master Akun</span></a> --}}
-                                <li class="dropdown"><a class="nav-link menu-title"
-                                        href="{{ route('kategori.index') }}"><i data-feather="home"></i><span>Master
-                                            Kategori</span></a>
-                                </li>
+
+                                @auth
+                                    <li class="sidebar-main-title">
+                                        <div>
+                                            <h6>Data Master</h6>
+                                        </div>
+                                    </li>
+                                    <li class="dropdown"><a class="nav-link menu-title"
+                                            href="{{ route('kategori.index') }}"><i data-feather="home"></i><span>Master
+                                                Kategori</span></a>
+                                    </li>
+                                @endauth
                             </ul>
                         </div>
                         <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
