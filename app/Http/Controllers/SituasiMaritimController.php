@@ -23,9 +23,10 @@ class SituasiMaritimController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function detail($id)
     {
-        //
+        $data = SituasiMaritim::find($id);
+        return view('situasi-maritim.detail', compact('data'));
     }
 
     /**
@@ -40,9 +41,10 @@ class SituasiMaritimController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SituasiMaritim $situasiMaritim)
+    public function show($id)
     {
-        //
+        $data = MasterKategori::with('getSituasiMaritim')->orderBy('id', 'DESC')->where('id', $id)->get();
+        return view('situasi-maritim.show', compact('data'));
     }
 
     /**
@@ -52,7 +54,7 @@ class SituasiMaritimController extends Controller
     {
         $kategori = MasterKategori::get();
         $data = SituasiMaritim::find($id);
-        return view('situasi-maritim.edit',compact('data','kategori'));
+        return view('situasi-maritim.edit', compact('data', 'kategori'));
     }
 
     /**

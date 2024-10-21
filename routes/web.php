@@ -43,6 +43,7 @@ Route::prefix('data-master')->group(function () {
     Route::DELETE('destroy/{id}', [MasterKategoriController::class, 'destroy'])->name('kategori.destroy');
 });
 Route::resource('situasi-maritim', SituasiMaritimController::class);
+Route::get('detail/{id}', [SituasiMaritimController::class, 'detail'])->name('situasi-maritim.detail');
 Route::resource('pantauan-kapal', PantauanKapalController::class);
 Route::resource('perkiraan-cuaca', PerkiraanCuacaController::class);
 

@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+
     }
 
     /**
@@ -33,6 +33,6 @@ class HomeController extends Controller
             }
         ])->orderBy('id', 'DESC')->get();
         // dd($kategori);
-        return view('home',compact('kategori'));
+        return view('home', compact('kategori'));
     }
 }
