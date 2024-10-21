@@ -25,7 +25,7 @@ class SituasiMaritimController extends Controller
      */
     public function detail($id)
     {
-        $data = SituasiMaritim::find($id);
+        $data = SituasiMaritim::with('getKategori')->find($id);
         return view('situasi-maritim.detail', compact('data'));
     }
 

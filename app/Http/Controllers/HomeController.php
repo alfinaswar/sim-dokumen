@@ -13,10 +13,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     /**
      * Show the application dashboard.
@@ -34,5 +31,10 @@ class HomeController extends Controller
         ])->orderBy('id', 'DESC')->get();
         // dd($kategori);
         return view('home', compact('kategori'));
+    }
+
+    public function kontak()
+    {
+        return view('kontak');
     }
 }

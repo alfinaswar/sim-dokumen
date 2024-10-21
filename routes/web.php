@@ -8,15 +8,15 @@ use App\Models\MasterKategori;
 use Illuminate\Support\Facades\Route;
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+ * |--------------------------------------------------------------------------
+ * | Web Routes
+ * |--------------------------------------------------------------------------
+ * |
+ * | Here is where you can register web routes for your application. These
+ * | routes are loaded by the RouteServiceProvider and all of them will
+ * | be assigned to the "web" middleware group. Make something great!
+ * |
+ */
 
 Route::get('/', function () {
     $kategori = MasterKategori::with([
@@ -32,7 +32,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/kontak', [App\Http\Controllers\HomeController::class, 'kontak'])->name('home.kontak');
 
 Route::prefix('data-master')->group(function () {
     Route::get('kategori', [MasterKategoriController::class, 'index'])->name('kategori.index');
@@ -46,5 +46,3 @@ Route::resource('situasi-maritim', SituasiMaritimController::class);
 Route::get('detail/{id}', [SituasiMaritimController::class, 'detail'])->name('situasi-maritim.detail');
 Route::resource('pantauan-kapal', PantauanKapalController::class);
 Route::resource('perkiraan-cuaca', PerkiraanCuacaController::class);
-
-

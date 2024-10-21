@@ -13,4 +13,9 @@ class SituasiMaritim extends Model
     protected $table = 'situasi_maritims';
 
     protected $guarded = ['id'];
+
+    public function getKategori()
+    {
+        return $this->hasOne(MasterKategori::class, 'id', 'Kategori');
+    }
 }

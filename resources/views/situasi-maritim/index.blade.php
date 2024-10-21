@@ -3,15 +3,16 @@
 @section('content')
     <div class="row">
         <div class="col-sm-12">
-
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5>Data Situasi Maritim</h5>
                     <!-- Tombol untuk membuka modal -->
-                    <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                        data-bs-target="#kategoriModal">
-                        Tambah Data
-                    </button>
+                    @auth
+                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                            data-bs-target="#kategoriModal">
+                            Tambah Data
+                        </button>
+                    @endauth
                 </div>
                 <div class="card-body">
                     @foreach ($kategori as $key => $kat)
@@ -25,7 +26,12 @@
                                                 <th width="22%" class="text-light">{{ $kat->NamaKategori }} </th>
                                                 <th width="22%" class="text-light">Lokasi</th>
                                                 <th width="32%" class="text-light">Waktu</th>
-                                                <th width="32%" class="text-light">Aksi</th>
+                                                @auth
+                                                    <th width="32%" class="text-light">Aksi</th>
+                                                @else
+                                                    <th width="32%" class="text-light">Keterangan</th>
+                                                    <th width="32%" class="text-light">Aksi</th>
+                                                @endauth
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -35,14 +41,23 @@
                                                     <td>{{ $kat->NamaKategori }} Kejadian</td>
                                                     <td>{{ $detail->Lokasi }}</td>
                                                     <td>{{ $detail->Waktu }}</td>
-                                                    <td> @auth
+                                                    @auth
+                                                        <td>
                                                             <a class="btn btn-warning btn-edit"
                                                                 href="{{ route('situasi-maritim.edit', $detail->id) }}">Edit</a>
                                                             <a class="btn btn-danger btn-delete"
                                                                 data-id="{{ $detail->id }}">Hapus</a>
-                                                        @else
-                                                        @endauth
-                                                    </td>
+                                                            <a class="btn btn-secondary btn-edit"
+                                                                href="{{ route('situasi-maritim.detail', $detail->id) }}"><i
+                                                                    class="fas fa-info-circle"></i></a>
+                                                        </td>
+                                                    @else
+                                                        <td>{{ $detail->Keterangan }}</td>
+                                                        <td><a class="btn btn-secondary btn-edit"
+                                                                href="{{ route('situasi-maritim.detail', $detail->id) }}"><i
+                                                                    class="fas fa-info-circle"></i></a></td>
+                                                    @endauth
+
                                                 </tr>
                                             @endforeach
 
@@ -56,6 +71,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <div class="modal fade" id="kategoriModal" tabindex="-1" aria-labelledby="kategoriModalLabel" aria-hidden="true">

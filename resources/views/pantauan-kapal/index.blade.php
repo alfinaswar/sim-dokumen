@@ -38,6 +38,10 @@
                                             <td> <a class="btn btn-warning btn-edit"
                                                     href="{{ route('pantauan-kapal.edit', $i->id) }}">Edit</a>
                                                 <a class="btn btn-danger btn-delete" data-id="{{ $i->id }}">Hapus</a>
+                                                <a class="btn btn-secondary btn-edit"
+                                                    href="{{ route('pantauan-kapal.show', $asing->id) }}">
+                                                    <i class="fas fa-info-circle"></i> <!-- Icon for Detail -->
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -59,6 +63,7 @@
                                 <th>Nama Kapal</th>
                                 <th>Negara Kapal</th>
                                 <th>Jenis Kapal</th>
+                                <th>Aksi</th>
                             </tr>
                         </head>
                         <tbody>
@@ -68,10 +73,14 @@
                                     <td>{{ $asing->NamaKapal }}</td>
                                     <td>{{ $asing->NegaraKapal }}</td>
                                     <td>{{ $asing->JenisKapal }}</td>
+                                    <td><a class="btn btn-secondary btn-edit"
+                                            href="{{ route('pantauan-kapal.show', $asing->id) }}">
+                                            <i class="fas fa-info-circle"></i> <!-- Icon for Detail -->
+                                        </a></td>
                                 </tr>
                             @endforeach
 
-                            <td></td>
+
 
                         </tbody>
                     </table>
@@ -134,6 +143,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 
     @if (session('success'))

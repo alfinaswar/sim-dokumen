@@ -38,7 +38,6 @@ class PantauanKapalController extends Controller
      */
     public function store(Request $request)
     {
-
         if ($request->hasFile('gambar')) {
             $imageName = time() . '.' . $request->gambar->extension();
             $request->gambar->move(public_path('images'), $imageName);
@@ -62,9 +61,10 @@ class PantauanKapalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PantauanKapal $pantauanKapal)
+    public function show($id)
     {
-        //
+        $data = PantauanKapal::find($id);
+        return view('pantauan-kapal.show', compact('data'));
     }
 
     /**

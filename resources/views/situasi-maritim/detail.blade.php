@@ -4,130 +4,74 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-6">
-                    <h3>Perkiraan Cuaca</h3>
+                    <h3>Situasi Maritim</h3>
                     <ol class="breadcrumb">
 
                     </ol>
                 </div>
                 <div class="col-sm-6">
                     <!-- Bookmark Start-->
-                    <div class="bookmark">
-                        <ul>
-                            <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover"
-                                    data-placement="top" title="" data-original-title="Tables"><i
-                                        data-feather="inbox"></i></a></li>
-                            <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover"
-                                    data-placement="top" title="" data-original-title="Chat"><i
-                                        data-feather="message-square"></i></a></li>
-                            <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover"
-                                    data-placement="top" title="" data-original-title="Icons"><i
-                                        data-feather="command"></i></a></li>
-                            <li><a href="javascript:void(0)" data-container="body" data-bs-toggle="popover"
-                                    data-placement="top" title="" data-original-title="Learning"><i
-                                        data-feather="layers"></i></a></li>
-                            <li><a href="javascript:void(0)"><i class="bookmark-search" data-feather="star"></i></a>
-                                <form class="form-inline search-form">
-                                    <div class="form-group form-control-search">
-                                        <input type="text" placeholder="Search..">
-                                    </div>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+
                     <!-- Bookmark Ends-->
                 </div>
             </div>
         </div>
     </div>
     <!-- Container-fluid starts-->
-    <div class="container-fluid">
-        <div>
-            <div class="row product-page-main p-0">
-                <div class="col-xl-4 col-md-6 box-col-12 xl-50">
-                    <div class="card">
-                        <div class="card-body">
+    <div class="container-fluid ">
+
+        <div class="row product-page-main p-0 justify-content-center">
+
+            <div class="col-xl-7 box-col-7 proorder-xl-3 xl-100">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="pro-group pt-0 border-0">
+                            <div class="product-page-details mt-0">
+                                <h3>Detail Situasi Maritim:
+                                    {{ \Carbon\Carbon::parse($data->Waktu)->format('d F Y') }}</h3>
+
+
+                                <div class="pro-review">
+
+                                </div>
+                            </div>
+                            <div class="product-price"><small>Dikeluarkan pada {{ $data->created_at }}</small><br>
+
+
+                            </div>
+
+                        </div>
+                        <div class="pro-group d-flex justify-content-between">
+                            <div>
+                                <h5>Kategori</h5>
+                                <p>{{ $data->getKategori->NamaKategori }}</p>
+                            </div>
+                            <div>
+
+                                <img src="{{ asset('assets/icon/' . $data->getKategori->Icon) }}" alt="Gambar Kategori"
+                                    class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="pro-group">
+                            <h5>Lokasi</h5>
+                            <p>{{ $data->Lokasi }}</p>
+                        </div>
+                        <div class="pro-group">
+                            <h5>Keterangan</h5>
                             <div class="row">
-                                <div class="col-xl-12 product-main">
-                                    <div class="pro-slide-single">
-                                        <div>
-                                            <img class="img-fluid" src="{{ asset('storage/' . $data->Gambar) }}"
-                                                alt="Description of the image">
-                                        </div>
-                                    </div>
-                                </div>
+
+                                <p class="fw-bold">{{ $data->Keterangan }}</p>
+
                             </div>
                         </div>
+
+
                     </div>
                 </div>
-                <div class="col-xl-7 box-col-7 proorder-xl-3 xl-100">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="pro-group pt-0 border-0">
-                                <div class="product-page-details mt-0">
-                                    <h3>Pantauan Cuaca: {{ \Carbon\Carbon::parse($data->TanggalBerlaku)->format('d F Y') }}
-                                        - {{ \Carbon\Carbon::parse($data->TanggalBerakhir)->format('d F Y') }}</h3>
-
-
-                                    <div class="pro-review">
-
-                                    </div>
-                                </div>
-                                <div class="product-price"><small>Dikeluarkan pada {{ $data->created_at }}</small><br>
-                                    <small>Berlaku Mulai {{ $data->TanggalBerlaku }}</small>
-
-                                </div>
-
-                            </div>
-                            <div class="pro-group">
-                                <h5>Peringatan</h5>
-                                <p>{{ $data->Peringatan }}</p>
-                            </div>
-                            <div class="pro-group">
-                                <h5>Kondisi Sinoptik</h5>
-                                <p>{{ $data->Keterangan }}</p>
-                            </div>
-                            <div class="pro-group">
-                                <h5>Perkiraan Area {{ $data->Wilayah }}</h5>
-                                <div class="row">
-                                    <div class="col-sm text-center">
-                                        <p>Cuaca</p>
-                                        @if ($data->Cuaca == 'Cerah')
-                                            <img src="{{ asset('assets/images/avatar/cerah.png') }}">
-                                        @elseif ($data->Cuaca == 'Berawan')
-                                            <img src="{{ asset('assets/images/avatar/berawan.png') }}">
-                                        @elseif ($data->Cuaca == 'Hujan Ringan')
-                                            <img src="{{ asset('assets/images/avatar/hujanringan.png') }}">
-                                        @elseif ($data->Cuaca == 'Hujan Berat')
-                                            <img src="{{ asset('assets/images/avatar/hujanberat.png') }}">
-                                        @else
-                                            <img src="{{ asset('assets/images/avatar/badai.png') }}">
-                                        @endif
-                                        <p class="fw-bold">{{ $data->Cuaca }}</p>
-                                    </div>
-                                    <div class="col-sm text-center">
-                                        <p>Angin</p>
-                                        <br><br>
-                                        <p class="fs-md-4 fw-bold">{{ $data->Angin }}</p>
-                                        <br>
-                                        <p class="fw-bold">{{ $data->ArahAngin }}</p>
-                                    </div>
-                                    <div class="col-sm text-center">
-                                        <p>Gelombang</p>
-                                        <br><br>
-                                        <p class="fs-md-4 fw-bold">{{ $data->Gelombang }}</p>
-                                        <br>
-                                        <p class="fw-bold">{{ $data->TinggiGelombang }} Meter</p>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-
             </div>
+
         </div>
+    </div>
 
     </div>
 @endsection
