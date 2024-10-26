@@ -6,34 +6,29 @@
             <div class="card">
                 <div class="card-header">
                     <h5>Data Garkamla</h5><span></span>
-                    @if (auth()->user()->role == 'Admin')
-                        <a href="{{ route('garkamla.create') }}" class="btn btn-primary float-end">
-                            Tambah Data
-                        </a>
-                    @else
-                    @endauth
-            </div>
-            <div class="card-body">
-                <div class="row mb-3">
 
-                    <div class="col-sm-3">
-                        <form action="{{ route('garkamla.index') }}">
-                            <label>Filter Tahun</label>
-                            <select class="form-control" id="tahun" name="tahun">
-                                <option value="">Pilih Tahun</option>
-                                @for ($year = 2020; $year <= date('Y'); $year++)
-                                    <option value="{{ $year }}">{{ $year }}</option>
-                                @endfor
-                            </select>
-                    </div>
-                    <div class="col-sm-3 d-flex align-items-end">
-
-                        <button type="submit" class="btn btn-primary ms-2">Cari</button>
-                    </div>
-                    </form>
                 </div>
+                <div class="card-body">
+                    <div class="row mb-3">
 
-                @auth
+                        <div class="col-sm-3">
+                            <form action="{{ route('garkamla.index') }}">
+                                <label>Filter Tahun</label>
+                                <select class="form-control" id="tahun" name="tahun">
+                                    <option value="">Pilih Tahun</option>
+                                    @for ($year = 2020; $year <= date('Y'); $year++)
+                                        <option value="{{ $year }}">{{ $year }}</option>
+                                    @endfor
+                                </select>
+                        </div>
+                        <div class="col-sm-3 d-flex align-items-end">
+
+                            <button type="submit" class="btn btn-primary ms-2">Cari</button>
+                        </div>
+                        </form>
+                    </div>
+
+
                     <div class="table-responsive">
                         <table class="display" id="basic-1">
                             <thead>
@@ -43,8 +38,11 @@
                                     <th>Kejahatan Lintas Batas</th>
                                     <th>Keselamatan</th>
                                     <th>Kejadian</th>
-                                    @if (auth()->user()->role == 'Admin')
-                                        <th>Aksi</th>
+                                    @if (auth()->check())
+                                        @if (auth()->user()->role == 'admin')
+                                            <td>Aksi</td>
+                                        @else
+                                        @endif
                                     @else
                                     @endauth
 
@@ -59,15 +57,17 @@
                                     <td>{{ $item->KejahatanLintasBatas }}</td>
                                     <td>{{ $item->Keselamatan }}</td>
                                     <td>{{ $item->Kejadian }}</td>
+                                    @if (auth()->check())
+                                        @if (auth()->user()->role == 'Admin')
+                                            <td>
+                                                <a class="btn btn-warning btn-edit"
+                                                    href="{{ route('garkamla.edit', $item->id) }}">Edit</a>
+                                                <a class="btn btn-danger btn-delete"
+                                                    data-id="{{ $item->id }}">Hapus</a>
+                                            </td>
+                                        @else
+                                        @endif
 
-                                    @if (auth()->user()->role == 'Admin')
-                                        <td>
-                                            <a class="btn btn-warning btn-edit"
-                                                href="{{ route('garkamla.edit', $item->id) }}">Edit</a>
-                                            <a class="btn btn-danger btn-delete"
-                                                data-id="{{ $item->id }}">Hapus</a>
-                                        </td>
-                                    @else
                                     @endauth
                             </tr>
                         @endforeach
@@ -75,15 +75,15 @@
                 </table>
 
             </div>
-        @endauth
 
 
-        <div class="card-body p-0 chart-block">
-            <div id="ChartDonat" style="width: 100%; height: 400px;"></div>
+
+            <div class="card-body p-0 chart-block">
+                <div id="ChartDonat" style="width: 100%; height: 400px;"></div>
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
 </div>
 
 </div>
@@ -108,31 +108,7 @@
 
     function drawBasic() {
         if ($("#ChartDonat").length > 0) {
-            var data = google.visualization.arrayToDataTable([
-                ['Language', 'Speakers (in millions)'],
-                ['Assamese', 13],
-                ['Bengali', 83],
-                ['Bodo', 1.4],
-                ['Dogri', 2.3],
-                ['Gujarati', 46],
-                ['Hindi', 300],
-                ['Kannada', 38],
-                ['Kashmiri', 5.5],
-                ['Konkani', 5],
-                ['Maithili', 20],
-                ['Malayalam', 33],
-                ['Manipuri', 1.5],
-                ['Marathi', 72],
-                ['Nepali', 2.9],
-                ['Oriya', 33],
-                ['Punjabi', 29],
-                ['Sanskrit', 0.01],
-                ['Santhali', 6.5],
-                ['Sindhi', 2.5],
-                ['Tamil', 61],
-                ['Telugu', 74],
-                ['Urdu', 52]
-            ]);
+            var data = google.visualization.arrayToDataTable(@json($datajson));
             var options = {
                 title: 'Diagram',
                 legend: 'none',

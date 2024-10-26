@@ -13,16 +13,21 @@ class GarkamlaController extends Controller
      */
     public function index(Request $request)
     {
-
         $garkamla = Garkamla::with('getKategori')
             ->when($request->tahun, function ($query, $tahun) {
                 return $query->whereYear('created_at', $tahun);
             })
             ->get();
-        $pelanggaran = $garkamla->map(function ($item) {
-            return [$item->semester, $item->jumlah];
-        })->toArray();
-        return view('garkamla.index', compact('garkamla'));
+        $jumlahPelanggaran = $garkamla->sum('Pelanggaran');
+        $jumlahKejahatan = $garkamla->sum('KejahatanLinstasBatas');
+        $jumlahKejadian = $garkamla->sum('Kejadian');
+        $datachart = [
+            ['Pelanggaran', $jumlahPelanggaran],
+            ['Kejahatan Lintas Batas', $jumlahKejahatan],
+            ['Kejadian', $jumlahKejadian],
+        ];
+        $datajson = json_encode($datachart);
+        return view('garkamla.index', compact('garkamla', 'datajson'));
     }
 
     /**
