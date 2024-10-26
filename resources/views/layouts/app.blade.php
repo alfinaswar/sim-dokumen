@@ -162,10 +162,9 @@
                                             data-feather="layout"></i><span>Pantauan Kapal</span></a>
                                 </li>
                                 <li class="dropdown"><a class="nav-link menu-title"
-                                        href="{{ route('home.kontak') }}"><i
-                                            data-feather="layout"></i><span>Kontak</span></a>
+                                        href="{{ route('garkamla.index') }}"><i
+                                            data-feather="layout"></i><span>Garkamla</span></a>
                                 </li>
-
                                 @auth
                                     <li class="sidebar-main-title">
                                         <div>
@@ -207,7 +206,11 @@
         </div>
     </div>
     <!-- latest jquery-->
-
+    <!-- Plugins JS start-->
+    <script src="{{ asset('') }}assets/js/chart/google/google-chart-loader.js"></script>
+    <script src="{{ asset('') }}assets/js/chart/google/google-chart.js"></script>
+    <script src="{{ asset('') }}assets/js/tooltip-init.js"></script>
+    <!-- Plugins JS Ends-->
     <!-- feather icon js-->
     <script src="{{ asset('') }}assets/js/icons/feather-icon/feather.min.js"></script>
     <script src="{{ asset('') }}assets/js/icons/feather-icon/feather-icon.js"></script>

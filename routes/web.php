@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GarkamlaController;
 use App\Http\Controllers\MasterKategoriController;
 use App\Http\Controllers\PantauanKapalController;
 use App\Http\Controllers\PerkiraanCuacaController;
@@ -46,3 +47,5 @@ Route::resource('situasi-maritim', SituasiMaritimController::class);
 Route::get('detail/{id}', [SituasiMaritimController::class, 'detail'])->name('situasi-maritim.detail');
 Route::resource('pantauan-kapal', PantauanKapalController::class);
 Route::resource('perkiraan-cuaca', PerkiraanCuacaController::class);
+Route::resource('garkamla', GarkamlaController::class);
+Route::POST('filter', [GarkamlaController::class, 'filter'])->name('garkamla.filter');
