@@ -39,6 +39,13 @@
 
 
         </div>
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <img src="{{ asset('assets/images/avatar/gambar-peta.jpeg') }}" width="auto">
+                </div>
+            </div>
+        </div>
     </div>
     </div>
     </div>

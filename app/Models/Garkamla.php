@@ -14,6 +14,6 @@ class Garkamla extends Model
 
     public function getKategori()
     {
-        return $this->hasOne(MasterKategori::class, 'id', 'KategoriID');
+        return $this->hasOne(MasterKategori::class, 'id', 'JenisGarkamla');
     }
 }

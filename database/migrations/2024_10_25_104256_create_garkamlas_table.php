@@ -12,11 +12,12 @@ return new class extends Migration {
     {
         Schema::create('garkamlas', function (Blueprint $table) {
             $table->id();
-            $table->string('KategoriID', 100)->nullable();
+            $table->string('JenisGarkamla')->nullable();
             $table->string('Pelanggaran')->nullable();
             $table->string('KejahatanLintasBatas')->nullable();
             $table->string('Keselamatan')->nullable();
             $table->string('Kejadian')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

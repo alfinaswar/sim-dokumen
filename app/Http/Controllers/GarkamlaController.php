@@ -18,17 +18,50 @@ class GarkamlaController extends Controller
                 return $query->whereYear('created_at', $tahun);
             })
             ->get();
+
         $jumlahPelanggaran = $garkamla->sum('Pelanggaran');
-        $jumlahKejahatan = $garkamla->sum('KejahatanLinstasBatas');
+        $jumlahKejahatan = $garkamla->sum('KejahatanLintasBatas');
         $jumlahKejadian = $garkamla->sum('Kejadian');
+
+        // Susun data dengan header kolom
         $datachart = [
+            ['Tipe', 'Jumlah'], // Header kolom
             ['Pelanggaran', $jumlahPelanggaran],
             ['Kejahatan Lintas Batas', $jumlahKejahatan],
             ['Kejadian', $jumlahKejadian],
         ];
+
         $datajson = json_encode($datachart);
-        return view('garkamla.index', compact('garkamla', 'datajson'));
+
+        $garkamla2 = Garkamla::with('getKategori')
+            ->selectRaw('YEAR(created_at) as year, COUNT(*) as jumlah')
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->get();
+
+        $dataPerTahun = Garkamla::selectRaw('YEAR(created_at) as year')
+            ->selectRaw('SUM(Pelanggaran) as jumlahPelanggaran')
+            ->selectRaw('SUM(KejahatanLintasBatas) as jumlahKejahatan')
+            ->selectRaw('SUM(Kejadian) as jumlahKejadian')
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->get();
+
+        $datachart2 = $dataPerTahun->map(function ($data) {
+            return [
+                'year' => $data->year,
+                'jumlahPelanggaran' => $data->jumlahPelanggaran,
+                'jumlahKejahatan' => $data->jumlahKejahatan,
+                'jumlahKejadian' => $data->jumlahKejadian,
+            ];
+        });
+
+        $datajson2 = json_encode($datachart2);
+
+        return view('garkamla.index', compact('garkamla', 'datajson', 'datajson2'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.

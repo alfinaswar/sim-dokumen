@@ -60,7 +60,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
         integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .blur {
+            filter: blur(4px);
+            pointer-events: none;
+            user-select: none;
+            color: transparent;
+            text-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+
+        }
+    </style>
 </head>
 
 <body>
@@ -97,6 +111,10 @@
                 </div>
                 <div class="nav-right col pull-right right-menu p-0">
                     <ul class="nav-menus">
+                        <li class="onhover-dropdown p-0">
+                            <a href="{{ route('home.kontak') }}" class="btn btn-primary-light">
+                                <i class="fas fa-user"></i> Kontak </a>
+                        </li>
                         <li><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()"><i
                                     data-feather="maximize"></i></a></li>
 
@@ -165,16 +183,24 @@
                                         href="{{ route('garkamla.index') }}"><i
                                             data-feather="layout"></i><span>Garkamla</span></a>
                                 </li>
+
                                 @auth
-                                    <li class="sidebar-main-title">
-                                        <div>
-                                            <h6>Data Master</h6>
-                                        </div>
-                                    </li>
-                                    <li class="dropdown"><a class="nav-link menu-title"
-                                            href="{{ route('kategori.index') }}"><i data-feather="home"></i><span>Master
-                                                Kategori</span></a>
-                                    </li>
+                                    @if (auth()->user()->role == 'Admin')
+                                        <li class="sidebar-main-title">
+                                            <div>
+                                                <h6>Data Master</h6>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown"><a class="nav-link menu-title"
+                                                href="{{ route('kategori.index') }}"><i
+                                                    data-feather="home"></i><span>Master
+                                                    Kategori</span></a>
+                                        </li>
+                                        <li class="dropdown"><a class="nav-link menu-title"
+                                                href="{{ route('register') }}"><i data-feather="layout"></i><span>Buat
+                                                    Akun</span></a>
+                                        </li>
+                                    @endif
                                 @endauth
                             </ul>
                         </div>

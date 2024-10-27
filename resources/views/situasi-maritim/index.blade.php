@@ -8,10 +8,12 @@
                     <h5>Data Situasi Maritim</h5>
                     <!-- Tombol untuk membuka modal -->
                     @auth
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                            data-bs-target="#kategoriModal">
-                            Tambah Data
-                        </button>
+                        @if (auth()->user()->role == 'Admin')
+                            <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
+                                data-bs-target="#kategoriModal">
+                                Tambah Data
+                            </button>
+                        @endif
                     @endauth
                 </div>
                 <div class="card-body">
@@ -27,10 +29,13 @@
                                                 <th width="22%" class="text-light">Lokasi</th>
                                                 <th width="32%" class="text-light">Waktu</th>
                                                 @auth
-                                                    <th width="32%" class="text-light">Aksi</th>
-                                                @else
-                                                    <th width="32%" class="text-light">Keterangan</th>
-                                                    <th width="32%" class="text-light">Aksi</th>
+                                                    @if (auth()->user()->role == 'Admin')
+                                                        <th width="32%" class="text-light">Keterangan</th>
+                                                        <th width="32%" class="text-light">Aksi</th>
+                                                    @else
+                                                        <th width="32%" class="text-light">Keterangan</th>
+                                                        <th width="32%" class="text-light">Aksi</th>
+                                                    @endif
                                                 @endauth
                                             </tr>
                                         </thead>
@@ -42,20 +47,24 @@
                                                     <td>{{ $detail->Lokasi }}</td>
                                                     <td>{{ $detail->Waktu }}</td>
                                                     @auth
-                                                        <td>
-                                                            <a class="btn btn-warning btn-edit"
-                                                                href="{{ route('situasi-maritim.edit', $detail->id) }}">Edit</a>
-                                                            <a class="btn btn-danger btn-delete"
-                                                                data-id="{{ $detail->id }}">Hapus</a>
-                                                            <a class="btn btn-secondary btn-edit"
-                                                                href="{{ route('situasi-maritim.detail', $detail->id) }}"><i
-                                                                    class="fas fa-info-circle"></i></a>
-                                                        </td>
-                                                    @else
-                                                        <td>{{ $detail->Keterangan }}</td>
-                                                        <td><a class="btn btn-secondary btn-edit"
-                                                                href="{{ route('situasi-maritim.detail', $detail->id) }}"><i
-                                                                    class="fas fa-info-circle"></i></a></td>
+                                                        @if (auth()->user()->role == 'Admin')
+                                                            <td>{{ $detail->Keterangan }}</td>
+                                                            <td>
+                                                                <a class="btn btn-warning btn-edit"
+                                                                    href="{{ route('situasi-maritim.edit', $detail->id) }}">Edit</a>
+                                                                <a class="btn btn-danger btn-delete"
+                                                                    data-id="{{ $detail->id }}">Hapus</a>
+                                                                <a class="btn btn-secondary btn-edit"
+                                                                    href="{{ route('situasi-maritim.detail', $detail->id) }}"><i
+                                                                        class="fas fa-info-circle"></i></a>
+                                                            </td>
+                                                        @else
+                                                            <td>{{ $detail->Keterangan }}</td>
+                                                            <td><a class="btn btn-secondary btn-edit"
+                                                                    href="{{ route('situasi-maritim.detail', $detail->id) }}"><i
+                                                                        class="fas fa-info-circle"></i></a></td>
+                                                        @endif
+
                                                     @endauth
 
                                                 </tr>

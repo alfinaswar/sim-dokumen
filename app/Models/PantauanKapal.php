@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PantauanKapal extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
+
     protected $table = 'pantauan_kapals';
     protected $guarded = ['id'];
+
+    public function getKategori()
+    {
+        return $this->hasOne(MasterKategori::class, 'id', 'JenisGarkamla');
+    }
 }

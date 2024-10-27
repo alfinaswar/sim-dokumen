@@ -43,20 +43,21 @@
 
                                         <td>{{ $i->Keterangan }}</td>
                                         <td>
-                                            <a class="btn btn-secondary btn-edit"
-                                                href="{{ route('perkiraan-cuaca.show', $i->id) }}">
-                                                <i class="fas fa-info-circle"></i> <!-- Icon for Detail -->
-                                            </a>
-                                            @auth
 
+                                            @if (auth()->check() && auth()->user()->role == 'Admin')
                                                 <a class="btn btn-warning btn-edit"
                                                     href="{{ route('perkiraan-cuaca.edit', $i->id) }}">
-                                                    <i class="fas fa-edit"></i> <!-- Icon for Edit -->
+                                                    <i class="fas fa-edit"></i>
                                                 </a>
                                                 <a class="btn btn-danger btn-delete" data-id="{{ $i->id }}">
-                                                    <i class="fas fa-trash-alt"></i> <!-- Icon for Hapus -->
+                                                    <i class="fas fa-trash-alt"></i>
                                                 </a>
-                                            @endauth
+                                            @else
+                                                <a class="btn btn-secondary btn-edit"
+                                                    href="{{ route('perkiraan-cuaca.show', $i->id) }}">
+                                                    <i class="fas fa-info-circle"></i>
+                                                </a>
+                                            @endif
 
                                         </td>
                                     </tr>

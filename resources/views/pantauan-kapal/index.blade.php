@@ -7,10 +7,11 @@
                 <div class="card-header">
                     <h5>Data Pantauan Kapal</h5><span></span>
                     @auth
-
-                        <a href="{{ route('pantauan-kapal.create') }}" class="btn btn-primary float-end">
-                            Tambah Data
-                        </a>
+                        @if (auth()->user()->role == 'Admin')
+                            <a href="{{ route('pantauan-kapal.create') }}" class="btn btn-primary float-end">
+                                Tambah Data
+                            </a>
+                        @endif
                     @endauth
                 </div>
                 <div class="card-body">
@@ -25,6 +26,7 @@
                                         <th>Negara Kapal</th>
                                         <th>Jenis Kapal</th>
                                         <th>Aksi</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -35,13 +37,21 @@
                                             <td>{{ $i->NamaKapal }}</td>
                                             <td>{{ $i->NegaraKapal }}</td>
                                             <td>{{ $i->JenisKapal }}</td>
-                                            <td> <a class="btn btn-warning btn-edit"
-                                                    href="{{ route('pantauan-kapal.edit', $i->id) }}">Edit</a>
-                                                <a class="btn btn-danger btn-delete" data-id="{{ $i->id }}">Hapus</a>
-                                                <a class="btn btn-secondary btn-edit"
-                                                    href="{{ route('pantauan-kapal.show', $asing->id) }}">
-                                                    <i class="fas fa-info-circle"></i> <!-- Icon for Detail -->
-                                                </a>
+                                            <td>
+                                                @auth
+                                                    @if (auth()->user()->role == 'Admin')
+                                                        <a class="btn btn-warning btn-edit"
+                                                            href="{{ route('pantauan-kapal.edit', $i->id) }}">Edit</a>
+                                                        <a class="btn btn-danger btn-delete" data-id="{{ $i->id }}">Hapus</a>
+                                                    @else
+                                                        <a class="btn btn-secondary btn-edit"
+                                                            href="{{ route('pantauan-kapal.show', $i->id) }}">
+                                                            <i class="fas fa-info-circle"></i>
+                                                        </a>
+                                                    @endif
+                                                @endauth
+
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -69,14 +79,30 @@
                         <tbody>
                             @foreach ($Asing as $asing)
                                 <tr>
-                                    <td>{{ $asing->MMSI }}</td>
-                                    <td>{{ $asing->NamaKapal }}</td>
-                                    <td>{{ $asing->NegaraKapal }}</td>
-                                    <td>{{ $asing->JenisKapal }}</td>
-                                    <td><a class="btn btn-secondary btn-edit"
-                                            href="{{ route('pantauan-kapal.show', $asing->id) }}">
-                                            <i class="fas fa-info-circle"></i> <!-- Icon for Detail -->
-                                        </a></td>
+                                    <td class="@guest blur @endguest">
+                                        {{ $asing->MMSI }}
+                                    </td>
+                                    <td class="@guest blur @endguest">
+                                        {{ $asing->NamaKapal }}
+                                    </td>
+                                    <td class="@guest blur @endguest">
+                                        {{ $asing->NegaraKapal }}
+                                    </td>
+                                    <td>
+                                        {{ $asing->JenisKapal }}
+                                    </td>
+                                    <td>
+                                        @auth
+                                            <a class="btn btn-secondary btn-edit"
+                                                href="{{ route('pantauan-kapal.show', $asing->id) }}">
+                                                <i class="fas fa-info-circle"></i> <!-- Icon for Detail -->
+                                            </a>
+                                        @else
+                                            <button class="btn btn-secondary" onclick="showLoginAlert()">
+                                                <i class="fas fa-info-circle"></i> <!-- Icon for Detail -->
+                                            </button>
+                                        @endauth
+                                    </td>
                                 </tr>
                             @endforeach
 
@@ -101,8 +127,8 @@
                                 <tbody>
                                     @foreach ($jumlahKapalPerNegara as $negarakapal)
                                         <tr>
-                                            <td>{{ $negarakapal->NegaraKapal }}</td>
-                                            <td>{{ $negarakapal->jumlah }}</td>
+                                            <td class="@guest blur @endguest">{{ $negarakapal->NegaraKapal }}</td>
+                                            <td class="@guest blur @endguest">{{ $negarakapal->jumlah }}</td>
                                         </tr>
                                     @endforeach
 
@@ -126,8 +152,8 @@
                                 <tbody>
                                     @foreach ($Tipekapal as $tipe)
                                         <tr>
-                                            <td>{{ $tipe->JenisKapal }}</td>
-                                            <td>{{ $tipe->JumlahTipe }}</td>
+                                            <td class="@guest blur @endguest">{{ $tipe->JenisKapal }}</td>
+                                            <td class="@guest blur @endguest">{{ $tipe->JumlahTipe }}</td>
                                         </tr>
                                     @endforeach
 
@@ -158,6 +184,21 @@
     @endif
 
     <script>
+        function showLoginAlert() {
+            Swal.fire({
+                title: 'Anda Belum Login',
+                text: 'Silakan klik di sini untuk menghubungi Admin Website.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Hubungi Admin',
+                cancelButtonText: 'Batal',
+                preConfirm: () => {
+                    window.location.href =
+                        '{{ route('home.kontak') }}';
+                }
+            });
+        }
+
         $(document).ready(function() {
             $('body').on('click', '.btn-delete', function() {
                 var id = $(this).data('id');
