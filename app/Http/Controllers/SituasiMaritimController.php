@@ -7,6 +7,7 @@ use App\Models\SituasiMaritim;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Return_;
 use DB;
+use Carbon\Carbon;
 
 class SituasiMaritimController extends Controller
 {
@@ -15,8 +16,15 @@ class SituasiMaritimController extends Controller
      */
     public function index()
     {
-        $kategori = MasterKategori::with('getSituasiMaritim')->orderBy('id', 'DESC')->latest()->get();
-        // return $kategori;
+        $today = Carbon::today();
+        $kategori = MasterKategori::with([
+            'getSituasiMaritim' => function ($query) use ($today) {
+                $query->where('created_at', '>=', $today);
+            }
+        ])
+            ->orderBy('id', 'DESC')
+            ->get();
+        $kategori2 = MasterKategori::get();
         return view('situasi-maritim.index', compact('kategori'));
     }
 

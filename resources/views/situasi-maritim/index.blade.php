@@ -27,48 +27,56 @@
                                                 <th width="4%" class="text-white">#</th>
                                                 <th width="22%" class="text-light">{{ $kat->NamaKategori }} </th>
                                                 <th width="22%" class="text-light">Lokasi</th>
-                                                <th width="32%" class="text-light">Waktu</th>
+                                                <th width="22%" class="text-light">Waktu</th>
                                                 @auth
                                                     @if (auth()->user()->role == 'Admin')
-                                                        <th width="32%" class="text-light">Keterangan</th>
+                                                        <th width="12%" class="text-light">Keterangan</th>
                                                         <th width="32%" class="text-light">Aksi</th>
                                                     @else
-                                                        <th width="32%" class="text-light">Keterangan</th>
+                                                        <th width="12%" class="text-light">Keterangan</th>
                                                         <th width="32%" class="text-light">Aksi</th>
                                                     @endif
                                                 @endauth
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($kat->getSituasiMaritim as $no => $detail)
+                                            @if (count($kat->getSituasiMaritim) < 1)
                                                 <tr>
-                                                    <th scope="row">{{ $no + 1 }}</th>
-                                                    <td>{{ $kat->NamaKategori }} Kejadian</td>
-                                                    <td>{{ $detail->Lokasi }}</td>
-                                                    <td>{{ $detail->Waktu }}</td>
-                                                    @auth
-                                                        @if (auth()->user()->role == 'Admin')
-                                                            <td>{{ $detail->Keterangan }}</td>
-                                                            <td>
-                                                                <a class="btn btn-warning btn-edit"
-                                                                    href="{{ route('situasi-maritim.edit', $detail->id) }}">Edit</a>
-                                                                <a class="btn btn-danger btn-delete"
-                                                                    data-id="{{ $detail->id }}">Hapus</a>
-                                                                <a class="btn btn-secondary btn-edit"
-                                                                    href="{{ route('situasi-maritim.detail', $detail->id) }}"><i
-                                                                        class="fas fa-info-circle"></i></a>
-                                                            </td>
-                                                        @else
-                                                            <td>{{ $detail->Keterangan }}</td>
-                                                            <td><a class="btn btn-secondary btn-edit"
-                                                                    href="{{ route('situasi-maritim.detail', $detail->id) }}"><i
-                                                                        class="fas fa-info-circle"></i></a></td>
-                                                        @endif
-
-                                                    @endauth
-
+                                                    <td colspan="6" class="text-center">Tidak Ada Data Hari Ini</td>
                                                 </tr>
-                                            @endforeach
+                                            @else
+                                                @foreach ($kat->getSituasiMaritim as $no => $detail)
+                                                    <tr>
+                                                        <th scope="row">{{ $no + 1 }}</th>
+                                                        <td>{{ $kat->NamaKategori }} Kejadian</td>
+                                                        <td>{{ $detail->Lokasi }}</td>
+                                                        <td>{{ $detail->Waktu }}</td>
+                                                        @auth
+                                                            @if (auth()->user()->role == 'Admin')
+                                                                <td>{{ $detail->Keterangan }}</td>
+                                                                <td>
+                                                                    <a class="btn btn-info btn-edit"
+                                                                        href="{{ route('situasi-maritim.edit', $detail->id) }}"><i
+                                                                            class="fas fa-edit"></i></a>
+                                                                    <a class="btn btn-danger btn-delete"
+                                                                        data-id="{{ $detail->id }}"><i
+                                                                            class="fas fa-trash"></i></a>
+                                                                    <a class="btn btn-secondary btn-edit"
+                                                                        href="{{ route('situasi-maritim.detail', $detail->id) }}"><i
+                                                                            class="fas fa-info-circle"></i></a>
+                                                                </td>
+                                                            @else
+                                                                <td>{{ $detail->Keterangan }}</td>
+                                                                <td><a class="btn btn-secondary btn-edit"
+                                                                        href="{{ route('situasi-maritim.detail', $detail->id) }}"><i
+                                                                            class="fas fa-info-circle"></i></a></td>
+                                                            @endif
+
+                                                        @endauth
+
+                                                    </tr>
+                                                @endforeach
+                                            @endif
 
                                         </tbody>
                                     </table>
